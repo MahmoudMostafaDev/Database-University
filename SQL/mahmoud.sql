@@ -5,7 +5,7 @@ CREATE TABLE student_has_partime_job (
     startDate DATE,
     endDate DATE,
     salary FLOAT,
-    FOREIGN KEY (student_id) REFERENCES student(id),
+    FOREIGN KEY (student_id) REFERENCES Student(studentID),
     FOREIGN KEY (job_id) REFERENCES partimeJob(id)
 );
 
@@ -23,8 +23,8 @@ CREATE TABLE student_maintains_attendance (
     student_id INT,
     course_id INT,
     date DATE,
-    FOREIGN KEY (student_id) REFERENCES student(id),
-    FOREIGN KEY (course_id) REFERENCES course(id)
+    FOREIGN KEY (student_id) REFERENCES Student(studentID),
+    FOREIGN KEY (course_id) REFERENCES Course(courseID)
 );
 
 
@@ -33,7 +33,7 @@ CREATE TABLE section_datslot (
     start_time TIME,
     end_time TIME,
     sectionID INT,
-    FOREIGN KEY (sectionID) REFERENCES section(id)
+    FOREIGN KEY (sectionID) REFERENCES Section(sectionID)
 );
 
 
@@ -42,15 +42,15 @@ CREATE TABLE student_issues_books (
     copyNo INT,
     issueDate DATE,
     returnDate DATE,
-    FOREIGN KEY (student_id) REFERENCES student(id),
-    FOREIGN KEY (copyNo) REFERENCES book(copyNo)
+    FOREIGN KEY (student_id) REFERENCES Student(studentID),
+    FOREIGN KEY (copyNo) REFERENCES book_has_copies(copyNo)
 );
 
 CREATE TABLE book_has_copies (
     book_id INT,
     copyNo INT PRIMARY KEY,
     status VARCHAR(45),
-    FOREIGN KEY (book_id) REFERENCES book(id)
+    FOREIGN KEY (book_id) REFERENCES books(id)
 );
 
 CREATE TABLE books (
@@ -68,13 +68,13 @@ CREATE TABLE eBill (
     semester VARCHAR(45),
     year YEAR,
     amountPaid FLOAT,
-    FOREIGN KEY (student_id) REFERENCES student(id)
+    FOREIGN KEY (student_id) REFERENCES Student(studentID)
 );
 
 CREATE TABLE books_has_authors (
     book_id INT,
     author_id INT,
-    FOREIGN KEY (book_id) REFERENCES book(id),
+    FOREIGN KEY (book_id) REFERENCES books(id),
     FOREIGN KEY (author_id) REFERENCES author(id)
 );
 
@@ -89,8 +89,8 @@ CREATE TABLE author (
 CREATE TABLE instructor_has_books (
     instructor_id INT,
     book_id INT,
-    FOREIGN KEY (instructor_id) REFERENCES instructor(id),
-    FOREIGN KEY (book_id) REFERENCES book(id)
+    FOREIGN KEY (instructor_id) REFERENCES Instructor(instructorID),
+    FOREIGN KEY (book_id) REFERENCES books(id)
 );
 
 
@@ -101,15 +101,16 @@ CREATE TABLE student_academicRecord (
     pastGPA FLOAT,
     currentGPA FLOAT,
     workExperience VARCHAR(45),
-    FOREIGN KEY (student_id) REFERENCES student(id)
+    FOREIGN KEY (student_id) REFERENCES Student(studentID)
 );
+
 CREATE TABLE Student (
     studentID INT PRIMARY KEY ,
     firstName VARCHAR(255),
     middleName VARCHAR(255),
     lastName VARCHAR(255),
-    ssn VARCHAR(9),
     dob DATE,
+    ssn VARCHAR(9),
     currentAddress VARCHAR(255),
     currentPhoneNo VARCHAR(15),
     email VARCHAR(255),
